@@ -7,7 +7,7 @@ const User = require('../models/user');
 
 //  GET    '/user'
 router.get('/', (req,res,next)=>{
-  User.find()
+  User.find()  // add .populate('') when other param of usermodel added
     .then(users => {
       res.json(users);
     })
@@ -27,7 +27,22 @@ router.get('/:id', (req, res) => {
     return;
   }
 
-  User.findById( id ).populate('indicators')
+  User.findById( id )  // add .populate('') when other param of usermodel added
+    .then( (foundUser) => {
+      res.status(200).json(foundUser);
+    })
+    .catch((err) => {
+      res.res.status(500).json(err);
+    })
+});
+
+
+  // GET '/user/email/:email'		 => to get a specific user
+router.get('/email/:email', (req, res) => {
+  const { email } = req.params;
+  console.log(email)
+
+  User.find( {email} )  // add .populate('') when other param of usermodel added
     .then( (foundUser) => {
       res.status(200).json(foundUser);
     })
@@ -36,6 +51,9 @@ router.get('/:id', (req, res) => {
     })
   });
 
+
+
+// PUT '/user/:id'
 
 
 
