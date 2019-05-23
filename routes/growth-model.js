@@ -55,9 +55,10 @@ router.get('/:id', (req, res) => {
   });
 
 
+// PUT '/growth-model/:id'
 
 
-
+// DELETE '/growth-model/:id'
 
 
 
