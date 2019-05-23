@@ -13,6 +13,7 @@ require('dotenv').config();
 const auth = require('./routes/auth');
 const growthModel = require('./routes/growth-model')
 const user = require('./routes/user')
+const team = require('./routes/team')
 
 // MONGOOSE CONNECTION
 mongoose.connect(process.env.MONGODB_URI, {
@@ -66,6 +67,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', auth);
 app.use('/growth-model', growthModel)
 app.use('/user', user)
+app.use('/team', team)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
