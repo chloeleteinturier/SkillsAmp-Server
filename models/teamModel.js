@@ -18,7 +18,7 @@ const teamModel = new Schema({
 
 
 // CREATE THE MODEL
-const TeamModel = mongoose.model('TeamModel', teamModel);
+const TeamModel = mongoose.model('Team', teamModel);
 
 
 // EXPORT THE MODEL

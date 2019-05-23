@@ -54,6 +54,19 @@ router.get('/:id', (req, res) => {
     })
   });
 
+  // GET '/growth-model/:name'		 => to get a specific growth-model
+router.get('/name/:name', (req, res) => {
+  const { name } = req.params;
+
+  GrowthModel.findOne( {name} ).populate('indicators')
+    .then( (foundGrowthModel) => {
+      res.status(200).json(foundGrowthModel);
+    })
+    .catch((err) => {
+      res.res.status(500).json(err);
+    })
+  });
+
 
 // PUT '/growth-model/:id'
 

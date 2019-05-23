@@ -26,6 +26,20 @@ router.get('/:id', (req, res) => {
 });
 
 
+//  GET    '/team'
+router.get('/', (req,res,next)=>{
+  Team.find()  // add .populate('') when other param of usermodel added
+    .then(teams => {
+      res.json(teams);
+    })
+    .catch(err => {
+      res.json(err);
+    })
+})
+
+
+
+
 // POST '/team'
 router.post('/', (req,res) => {
   const { name, members, growthModel } = req.body;
