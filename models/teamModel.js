@@ -9,6 +9,7 @@ const teamModel = new Schema({
   name:{ type: String, required: true},
   members:[{type: Schema.Types.ObjectId, ref: 'User'}],
   growthModel: {type: Schema.Types.ObjectId, ref: 'GrowthModel'},
+  checkpoints:[{type: Schema.Types.ObjectId, ref: 'Checkpoint'}],
 }, {
   timestamps: {
     createdAt: 'created_at',
