@@ -42,9 +42,9 @@ router.get('/', (req,res,next)=>{
 
 // POST '/team'
 router.post('/', (req,res) => {
-  const { name, members, growthModel } = req.body;
+  const { name, members, growthModel, checkpoints } = req.body;
 
-  Team.create({ name, members, growthModel})
+  Team.create({ name, members, growthModel, checkpoints})
     .then((response)=> {
       res
         .status(201)

@@ -63,7 +63,7 @@ router.put('/:id', (req, res, next)=>{
 
   console.log(req.body)
 
-  User.findByIdAndUpdate(req.params.id, {$set: req.body}).populate('team') 
+  User.findByIdAndUpdate(req.params.id, {$set: req.body}) //.populate('team') 
     .then(() => {
       res.json({ message: `Project with ${req.params.id} is updated successfully.` });
     })

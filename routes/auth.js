@@ -44,7 +44,7 @@ router.post('/login', isNotLoggedIn(), validationLoggin(), (req, res, next) => {
 
 //  POST    '/signup'
 router.post('/signup', isNotLoggedIn(), validationLoggin(), (req, res, next) => {
-  const { username, password, firstName, lastName, email, photoUrl } = req.body;
+  const { password, firstName, lastName, email, photoUrl } = req.body;
 
   User.findOne({
     email
@@ -61,7 +61,6 @@ router.post('/signup', isNotLoggedIn(), validationLoggin(), (req, res, next) => 
       const hashPass = bcrypt.hashSync(password, salt);
 
       const newUser = new User({
-        username,
         firstName,
         lastName,
         email,
