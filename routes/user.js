@@ -7,7 +7,7 @@ const User = require('../models/user');
 
 //  GET    '/user'
 router.get('/', (req,res,next)=>{
-  User.find()  // add .populate('') when other param of usermodel added
+  User.find().populate('team')  // add .populate('') when other param of usermodel added
     .then(users => {
       res.json(users);
     })
@@ -27,7 +27,7 @@ router.get('/:id', (req, res) => {
     return;
   }
 
-  User.findById( id )  // add .populate('') when other param of usermodel added
+  User.findById( id ).populate('team')   // add .populate('') when other param of usermodel added
     .then( (foundUser) => {
       res.status(200).json(foundUser);
     })
@@ -42,7 +42,7 @@ router.get('/email/:email', (req, res) => {
   const { email } = req.params;
   console.log(email)
 
-  User.find( {email} )  // add .populate('') when other param of usermodel added
+  User.find( {email} ).populate('team')   // add .populate('') when other param of usermodel added
     .then( (foundUser) => {
       res.status(200).json(foundUser);
     })
@@ -54,6 +54,23 @@ router.get('/email/:email', (req, res) => {
 
 
 // PUT '/user/:id'
+router.put('/:id', (req, res, next)=>{
+
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+
+  console.log(req.body)
+
+  User.findByIdAndUpdate(req.params.id, {$set: req.body}).populate('team') 
+    .then(() => {
+      res.json({ message: `Project with ${req.params.id} is updated successfully.` });
+    })
+    .catch(err => {
+      res.json(err);
+    })
+})
 
 
 

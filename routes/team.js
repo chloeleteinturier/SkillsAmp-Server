@@ -16,7 +16,7 @@ router.get('/:id', (req, res) => {
     return;
   }
 
-  Team.findById( id )  // add .populate('') when other param of teamModel added
+  Team.findById( id ).populate('members')   // add .populate('') when other param of teamModel added
     .then( (foundTeam) => {
       res.status(200).json(foundTeam);
     })
@@ -28,7 +28,7 @@ router.get('/:id', (req, res) => {
 
 //  GET    '/team'
 router.get('/', (req,res,next)=>{
-  Team.find()  // add .populate('') when other param of usermodel added
+  Team.find().populate('members')  // add .populate('') when other param of usermodel added
     .then(teams => {
       res.json(teams);
     })
