@@ -5,10 +5,10 @@ const Schema = mongoose.Schema; // Schema constructor
 const assessmentSchema = require('./../schemas/assessmentSchema');
 
 // CREATE THE SCHEMA
-const sessionSchema = new Schema({
+const checkpointSchema = new Schema({
   date: Date,
-  assessments:[{ type: [assessmentShema]}]
-  currentSession: { Type: Boolean, default: true },
+  assessments:[{ type: [assessmentSchema]}]
+  currentCheckpoint: { Type: Boolean, default: true },
 }, {
   timestamps: {
     createdAt: 'created_at',
@@ -18,8 +18,8 @@ const sessionSchema = new Schema({
 
 
 // CREATE THE MODEL
-const Session = mongoose.model('Team', sessionSchema);
+const Checkpoint = mongoose.model('Checkpoint', checkpointSchema);
 
 
 // EXPORT THE MODEL
-module.exports = Session;
+module.exports = Checkpoint;
