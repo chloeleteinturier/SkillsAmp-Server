@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema; // Schema constructor
 
 // IMPORT THE SCHEMA TO USE IT AS A NESTED TYPE
-const indicatorSchema = require('./../schemas/indicatorShema');
+const indicatorSchema = require('../schemas/indicatorSchema');
 
 // CREATE THE SCHEMA
 const growthModel = new Schema({
