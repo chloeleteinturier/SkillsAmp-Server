@@ -16,7 +16,7 @@ router.get('/:id', (req, res) => {
     return;
   }
 
-  Team.findById( id )   //.populate('members')   // add .populate('') when other param of teamModel added
+  Team.findById( id ) //.populate('checkpoints')     // add .populate('') when other param of teamModel added
     .then( (foundTeam) => {
       res.status(200).json(foundTeam);
     })
@@ -28,7 +28,7 @@ router.get('/:id', (req, res) => {
 
 //  GET    '/team'
 router.get('/', (req,res,next)=>{
-  Team.find().populate('members')  // add .populate('') when other param of usermodel added
+  Team.find().populate('members').populate('checkpoints')  // add .populate('') when other param of usermodel added
     .then(teams => {
       res.json(teams);
     })
@@ -57,23 +57,24 @@ router.post('/', (req,res) => {
     })
 })
 
+// PUT '/team/:id'
+router.put('/:id', (req, res, next)=>{
 
-// PUT '/team/:id' => to update a specific project
-// router.put('/team/:id', (req, res, next)=>{
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
 
-//   if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
-//     res.status(400).json({ message: 'Specified id is not valid' });
-//     return;
-//   }
+  console.log(req.body)
 
-//   Team.findByIdAndUpdate(req.params.id, req.body)
-//     .then(() => {
-//       res.json({ message: `Project with ${req.params.id} is updated successfully.` });
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     })
-// })
+  Team.findByIdAndUpdate(req.params.id, {$set: req.body})
+    .then(() => {
+      res.json({ message: `Project with ${req.params.id} is updated successfully.` });
+    })
+    .catch(err => {
+      res.json(err);
+    })
+})
 
 
 module.exports = router;

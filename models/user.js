@@ -5,7 +5,11 @@ const userSchema = new Schema({
   password: String,
   firstName: String,
   lastName: String,
-  email: String,
+  email: {
+    type:String,
+    required: true,
+    unique: true
+},
   photoUrl: String,
   team: {type: Schema.Types.ObjectId, ref: 'Team'},
 }, {
