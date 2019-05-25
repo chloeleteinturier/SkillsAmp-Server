@@ -8,6 +8,7 @@ const userSchema = new Schema({
   lastName: String,
   email: String,
   photoUrl: String,
+  team: {type: Schema.Types.ObjectId, ref: 'Team'},
 }, {
   timestamps: {
     createdAt: 'created_at',
