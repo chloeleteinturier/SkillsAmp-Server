@@ -7,15 +7,14 @@ const assessmentSchema = require('./../schemas/assessmentSchema');
 // CREATE THE SCHEMA
 const checkpointSchema = new Schema({
   date: Date,
-  assessments:[{ type: [assessmentSchema]}]
-  currentCheckpoint: { Type: Boolean, default: true },
+  assessments:{ type: [assessmentSchema] },
+  currentCheckpoint: Boolean,
 }, {
   timestamps: {
     createdAt: 'created_at',
     updatedAt: 'updated_at'
   },
 });
-
 
 // CREATE THE MODEL
 const Checkpoint = mongoose.model('Checkpoint', checkpointSchema);

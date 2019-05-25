@@ -7,7 +7,7 @@ const indicatorSchema = require('./indicatorSchema');
 // CREATE A SCHEMA
 const assessmentSchema = new Schema({
   name: String,
-  indicators:{ type: [indicatorSchema], required: true },
+  indicators:{ type: [indicatorSchema]},
 });
 
 // EXPORT
