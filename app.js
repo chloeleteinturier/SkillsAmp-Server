@@ -14,6 +14,7 @@ const auth = require('./routes/auth');
 const growthModel = require('./routes/growth-model')
 const user = require('./routes/user')
 const team = require('./routes/team')
+const checkpoint = require('./routes/checkpoint')
 
 // MONGOOSE CONNECTION
 mongoose.connect(process.env.MONGODB_URI, {
@@ -68,6 +69,7 @@ app.use('/auth', auth);
 app.use('/growth-model', growthModel)
 app.use('/user', user)
 app.use('/team', team)
+app.use('/checkpoint', checkpoint)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
