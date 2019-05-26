@@ -16,7 +16,7 @@ router.get('/:id', (req, res) => {
     return;
   }
 
-  Checkpoint.findById( id ) //.populate('assessment', 'growthCompass', 'indicators')   // add .populate('') when other param of teamModel added
+  Checkpoint.findById( id ).populate('assessments')  // add .populate('') when other param of teamModel added
     .then( (foundCheckpoint) => {
       res.status(200).json(foundCheckpoint);
     })
@@ -28,7 +28,7 @@ router.get('/:id', (req, res) => {
 
 //  GET    '/checkpoint'
 router.get('/', (req,res,next)=>{
-  Checkpoint.find() //.populate('assessment', 'growthCompass', 'indicators')  // add .populate('') when other param of usermodel added
+  Checkpoint.find().populate('assessments')  // add .populate('') when other param of usermodel added
     .then(teams => {
       res.json(teams);
     })
@@ -42,9 +42,9 @@ router.get('/', (req,res,next)=>{
 
 // POST '/checkpoint'
 router.post('/', (req,res) => {
-  const { date, currentCheckpoint } = req.body;
+  const { date, currentCheckpoint, assessments } = req.body;
 
-  Checkpoint.create({ date, currentCheckpoint})
+  Checkpoint.create({ date, currentCheckpoint, assessments})
     .then((response)=> {
       res
         .status(201)
@@ -67,7 +67,7 @@ router.put('/:id', (req, res, next)=>{
 
   console.log(req.body)
 
-  Checkpoint.findByIdAndUpdate(req.params.id, {$set: req.body}) //.populate('team') 
+  Checkpoint.findByIdAndUpdate(req.params.id, {$set: req.body})
     .then(() => {
       res.json({ message: `Project with ${req.params.id} is updated successfully.` });
     })

@@ -16,7 +16,7 @@ router.get('/:id', (req, res) => {
     return;
   }
 
-  Team.findById( id ) //.populate('checkpoints')     // add .populate('') when other param of teamModel added
+  Team.findById( id ).populate('checkpoints').populate('growthModel')  //.populate('checkpoints')     // add .populate('') when other param of teamModel added
     .then( (foundTeam) => {
       res.status(200).json(foundTeam);
     })
@@ -25,10 +25,9 @@ router.get('/:id', (req, res) => {
     })
 });
 
-
 //  GET    '/team'
 router.get('/', (req,res,next)=>{
-  Team.find().populate('members').populate('checkpoints')  // add .populate('') when other param of usermodel added
+  Team.find().populate('members').populate('checkpoints').populate('growthModel')  // add .populate('') when other param of usermodel added
     .then(teams => {
       res.json(teams);
     })
