@@ -8,7 +8,7 @@ const growthCompassSchema = require('./growthCompassSchema');
 const assessmentSchema = new Schema({
   evaluator: {type: Schema.Types.ObjectId, ref: 'User'},
   evaluated: {type: Schema.Types.ObjectId, ref: 'User'},
-  growthCompass: { type: [growthCompassSchema]},
+  growthCompass: { type: growthCompassSchema},
 });
 
 // EXPORT
