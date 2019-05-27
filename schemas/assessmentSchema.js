@@ -9,6 +9,7 @@ const assessmentSchema = new Schema({
   evaluator: {type: Schema.Types.ObjectId, ref: 'User'},
   evaluated: {type: Schema.Types.ObjectId, ref: 'User'},
   growthCompass: { type: growthCompassSchema},
+  done: {type: Boolean, default: false}
 });
 
 // EXPORT
