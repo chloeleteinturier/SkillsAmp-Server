@@ -33,7 +33,7 @@ const app = express();
 // CORS MIDDLEWARE SETUP
 app.use(cors({
   credentials: true,
-  origin: [process.env.PUBLIC_DOMAIN]
+  origin: [process.env.PUBLIC_DOMAIN, 'https://skillsamp.herokuapp.com/']
 }));
 // app.use((req, res, next) => {
 //   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -85,6 +85,12 @@ app.use((err, req, res, next) => {
     const statusError = err.status || '500' 
     res.status(statusError).json(err);
   }
+});
+
+// REACT APP index.html	
+app.use((req, res, next) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
 });
 
 module.exports = app;
