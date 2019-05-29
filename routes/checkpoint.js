@@ -67,7 +67,7 @@ router.put('/:id', (req, res, next)=>{
 
   console.log(req.body)
 
-  Checkpoint.findByIdAndUpdate(req.params.id, {$set: req.body})
+  Checkpoint.findByIdAndUpdate(req.params.id, req.body )
     .then(() => {
       res.json({ message: `Project with ${req.params.id} is updated successfully.` });
     })
