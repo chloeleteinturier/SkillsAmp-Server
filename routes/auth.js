@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 
+const parser = require('./../config/cloufinary');
+
+
 const User = require('../models/user');
 
 // HELPER FUNCTIONS
@@ -41,6 +44,15 @@ router.post('/login', isNotLoggedIn(), validationLoggin(), (req, res, next) => {
     .catch(next);
 });
 
+// upload Image
+router.post('/signup/image', parser.single('photo'), (req, res, next) => {
+  console.log('file upload');
+  if (!req.file) {
+    next(new Error('No file uploaded!'));
+  };
+  const imageUrl = req.file.secure_url;
+  res.json(imageUrl).status(200);
+});
 
 //  POST    '/signup'
 router.post('/signup', isNotLoggedIn(), validationLoggin(), (req, res, next) => {
@@ -76,6 +88,8 @@ router.post('/signup', isNotLoggedIn(), validationLoggin(), (req, res, next) => 
     })
     .catch(next);
 });
+
+
 
 
 //  POST    '/logout'
