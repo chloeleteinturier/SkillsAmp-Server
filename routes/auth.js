@@ -94,7 +94,9 @@ router.post('/signup', isNotLoggedIn(), validationLoggin(), (req, res, next) => 
 
 //  POST    '/logout'
 router.post('/logout', isLoggedIn(), (req, res, next) => {
+  console.log(req.session)
   req.session.destroy();
+  console.log(req.session)
   return res.status(204).send();
 });
 
