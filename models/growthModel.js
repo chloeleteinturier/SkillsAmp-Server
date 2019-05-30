@@ -7,7 +7,7 @@ const indicatorSchema = require('../schemas/indicatorSchema');
 // CREATE THE SCHEMA
 const growthModel = new Schema({
   name:{ type: String, required: true, unique: true},
-  indicators:{ type: [indicatorSchema], required: true },
+  indicators:{ type: [indicatorSchema], required: true},
 }, {
   timestamps: {
     createdAt: 'created_at',
