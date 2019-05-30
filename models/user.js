@@ -12,6 +12,7 @@ const userSchema = new Schema({
 },
   photoUrl: String,
   team: {type: Schema.Types.ObjectId, ref: 'Team'},
+  currentGrowthCompass : {type: Schema.Types.ObjectId, ref: 'FinalCompass'}
 }, {
   timestamps: {
     createdAt: 'created_at',
