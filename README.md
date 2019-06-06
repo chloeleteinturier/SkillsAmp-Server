@@ -436,8 +436,8 @@ message=newSchema{
 ### Git
 URls for the project repo and deploy
 [Link Repo Server](https://github.com/chloeleteinturier/GrowthCompass-Server)
-[Link Repo Client]()
-[Link Deploy]()
+[Link Repo Client](https://github.com/chloeleteinturier/SkillsAmp-Client)
+[Link Deploy](https://skillsamp.herokuapp.com/)
 
 
 ### Slides
