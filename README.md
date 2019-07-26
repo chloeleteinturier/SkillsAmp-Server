@@ -4,6 +4,8 @@
 GrowthCompass is a tool for personal growth, the users can create a team addind others users and choose or create a growth model or choose one that already exists and then create new session of assessments. 
 During a session, the user will have to assess himself and the other members of the team. When everybody finish the assessments, The team compare there result for each person of the team and find an agreement for a final assessment. For this, the members can chat together to express there point of view. Then, they determinate 2 indicators to improve for each member and give some tasks to do that will help for the improvment.
 
+[Link Deploy](https://skillsamp.herokuapp.com/)
+
 
 ## User Stories
 
@@ -21,7 +23,6 @@ During a session, the user will have to assess himself and the other members of 
 
 
 ## Backlog
-- Landing page
 - Task board
 - Add comment during the assessments
 
@@ -34,11 +35,12 @@ During a session, the user will have to assess himself and the other members of 
  `/` | HomePageComponent| public/user | Link to login and signup in public and user's dashboard if user |
 | `/signup` | SignupPageComponent| anon only| signup form, link to login, navigate to homepage after signup|
 | `/login` | LoginPageComponent | anon only |login form, link to signup, navigate to homepage after login |
+| `/edit-profile` | EditProfilePageComponent| user only| form to update the user's data|
 | `/add-team` | AddTeamPageComponent| user only | form to add team search bar by name for users and for growth model navigate to team page after creation|
 | `/add-team` | AddTeamPageComponent| user only | update the users member of the new team |
 | `/add-model` | AddGrowthModelPageComponent | user only | creates a new growth model, navigates to profile page after creation |
 | `/add-model` | AddGrowthModelPageComponent | user only | update one of my growth model, navigates to profile page after update |
-| `/add-model` | AddTeamPageComponent| user only | delete one of my growth model|
+| `/add-model` | AddGrowthModelPageComponent| user only | delete one of my growth model|
 | `/team/:id` | TeamPageComponent | user only | dashboard of the team with link to the sessions |
 | `/team/:id` | TeamPageComponent | user only | update the team in any changes |
 | `/team/:id/session:id` | SessionPageComponent | user only | create a new session |
@@ -125,15 +127,39 @@ During a session, the user will have to assess himself and the other members of 
 - Auth Service
   - auth.login(user)
   - auth.signup(user)
+  - auth.imageUpload(file)
   - auth.logout()
   - auth.me()
-  - auth.getUser() // synchronous
+
 - Team Service
-  - team.create(data)
-  - team.detail(id)
-  - team.addMember(id)
-  - team.addSession(id)
-  - team.edit(id)
+  - team.createTeam(data)
+  - team.getOne(id)
+  - team.updateOne(id, data)
+
+- User Service
+  - user.getAll()
+  - user.getOne(id)
+  - user.getOneByEmail(email)
+  - user.updateTheUserTeam(id, data)
+  - user.updateUserCurrentCompass(id, data)
+  - user.updateUser(id, data)
+
+- GrowthModel Service
+  - growthModel.getAll()
+  - growthModel.getOne(id)
+  - growthModel.getOneByName(name)
+
+- Checkpoint Service
+  - checkpoint.createCheckpoint(data)
+  - checkpoint.getAll()
+  - checkpoint.getOne(id)
+  - checkpoint.updateOne(data)
+
+- FinalCompass Service
+  - finalCompass.createFinalCompass(data)
+  - finalCompass.getAll()
+  - finalCompass.getOne(id)
+  - finalCompass.updateOne(id, data)
 
 
 # Server
@@ -141,80 +167,70 @@ During a session, the user will have to assess himself and the other members of 
 ## Models
 ```
 user={
-  firstName:String,
-  lastName:String,
-  photoUrl:String,
-  email:String,
-  password:String,
-  team:'team_id',
-  currentGrowthCompass:'growthCompass.Schema',
-  previousGrowthCompassess:['growthCompass.Schema'],
-  tasks:[task.Schema],
-  completedTasks:[task.Schema],
-  myGrowthModel:[growthModel_id]
+  password: String,
+  firstName: String,
+  lastName: String,
+  email: {
+    type:String,
+    required: true,
+    unique: true
+  },
+  photoUrl: String,
+  team: {type: Schema.Types.ObjectId, ref: 'Team'},
+  currentGrowthCompass : {type: Schema.Types.ObjectId, ref: 'FinalCompass'}
 }
 
 growthModel={
-  name:String,
-  indicators: [indicator.Schema]
+  name:{ type: String, required: true, unique: true},
+  indicators:{ type: [indicatorSchema], required: true},
 }
 
 team={
-  name:String,
-  member:[user_id]
-  growthModel:growthModel_id
-  sessions:[session_id]
+  name:{ type: String, required: true},
+  members:[{type: Schema.Types.ObjectId, ref: 'User'}],
+  growthModel: {type: Schema.Types.ObjectId, ref:'GrowthModel'},
+  checkpoints:[{type: Schema.Types.ObjectId, ref: 'Checkpoint'}],
 }
 
-session={
-  date:Date,
-  assessments:[assessment.Schema],
-  finalAssessments[finalCompass_id]
-  currentSession:Boolean
+checkpoint={
+  date: Date,
+  assessments:{ type: [assessmentSchema] },
+  finalAssessments: [{type: Schema.Types.ObjectId, ref: 'FinalCompass'}],
+  currentCheckpoint: Boolean,
 }
 
 finalCompass_id={
-  evaluated:user_id
-  growthCompass:growthCompass_id,
-  toImprove[indicator.Schema],
-  tasks:[task.Schema],
-  messages:[message.Schema]
+  evaluated: {type: Schema.Types.ObjectId, ref: 'User'},
+  growthCompass:{ type: growthCompassSchema},
+  toImprove: {type: Array, default: []},
+  done: {type: Boolean, default: false},
+  team:{type: Schema.Types.ObjectId, ref: 'Team'}
 }
 ```
 
 ## Schemas
 ```
 indicator=newSchema{
-  name:String,
-  levelOne: String,
-  levelTwo: String,
-  levelThree: String,
-  levelFour: String,
-  assessedLevel: Number
-}
-
-task=newSchema{
-  title:String,
-  description:String,
-  isDone:Boolean
+  name:{ type: String, required: true},
+  levelOne:{ type: String},
+  levelTwo:{ type: String},
+  levelThree:{ type: String},
+  levelFour:{ type: String},
+  assessedLevel:{ type: Number, default: 0},
 }
 
 growthCompass=newSchema{
-  name:String,
-  indicators:[indicator.Schema]
+  name: String,
+  indicators:{ type: [indicatorSchema]},
 }
 
-assessment=newScema{
-  evaluator:user_id,
-  evaluated:user_id,
-  growthCompass:growthCompass.Schema
+assessment=newSchema{
+  evaluator: {type: Schema.Types.ObjectId, ref: 'User'},
+  evaluated: {type: Schema.Types.ObjectId, ref: 'User'},
+  growthCompass: { type: growthCompassSchema},
+  done: {type: Boolean, default: false}
 }
 
-message=newSchema{
-  user:user_id,
-  content:String,
-  date:Date
-}
 ```
 
 ## Data structure
@@ -224,6 +240,7 @@ message=newSchema{
 - ('/') : profile page if logged in or home page with login/signup links
 - ('/login') : login page
 - ('/signup') : signup page
+- ('/edit-profile') : edit profile 
 - ('/add-team') : form page to create new team
 - ('/add-model') : form page to create new growth model
 - ('/team:id') : profile of the team which display the users, there growth compass and the sessions
