@@ -73,5 +73,24 @@ router.put('/:id', (req, res, next)=>{
 })
 
 
+router.put('/user/:id', (req, res, next)=>{
+
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+
+  console.log(req.body)
+
+  User.findByIdAndUpdate(req.params.id, req.body )
+    .then(() => {
+      res.json({ message: `Project with ${req.params.id} is updated successfully.` });
+    })
+    .catch(err => {
+      res.json(err);
+    })
+})
+
+
 
 module.exports = router;
