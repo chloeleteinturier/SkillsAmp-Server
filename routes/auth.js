@@ -94,7 +94,6 @@ router.post('/signup', isNotLoggedIn(), validationLoggin(), (req, res, next) => 
 
 //  POST    '/logout'
 router.post('/logout', isLoggedIn(), (req, res, next) => {
-  console.log(req.session)
   req.session.destroy();
   console.log(req.session)
   return res.status(204).send();
@@ -105,6 +104,32 @@ router.get('/private', isLoggedIn(), (req, res, next) => {
   res.status(200).json({
     message: 'This is a private message'
   });
+});
+
+//  GET    '/checkPassword'
+router.post('/checkPassword', isLoggedIn(), (req, res, next) => {
+  const { email, password } = req.body;
+  User.findOne({
+      email
+    })
+    .then((user) => {
+      if (!user) {
+        const err = new Error('Not Found');
+        err.status = 404;
+        err.statusMessage = 'Not Found';
+        next(err)
+      }
+      if (bcrypt.compareSync(password, user.password)) {
+        req.session.currentUser = user;
+        return res.status(200).json(user);
+      } else {
+        const err = new Error('Unauthorized');
+        err.status = 401;
+        err.statusMessage = 'Unauthorized';
+        next(err);
+      }
+    })
+    .catch(next);
 });
 
 module.exports = router;
