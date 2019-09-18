@@ -37,15 +37,16 @@ app.use(cors({
   origin: [process.env.PUBLIC_DOMAIN, 'http://skillsamp.herokuapp.com/']
 }));
 app.use((req, res, next) => {
-  if((process.env.ALLOWED_ORIGINS.indexOf(req.headers.origin) > -1)){
+
+  if(ALLOWED_ORIGINS.indexOf(req.headers.origin) > -1) {
     res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-  } else { // allow other origins to make unauthenticated CORS requests
-    res.set('Access-Control-Allow-Origin', '*')        
   }
+
+  // res.setHeader('Access-Control-Allow-Origin', 'http://skillsamp.herokuapp.com');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
 });
 
 // SESSION MIDDLEWARE
