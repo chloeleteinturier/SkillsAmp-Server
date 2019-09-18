@@ -1,8 +1,20 @@
 # SkillsAmp
 
 ## Description
-GrowthCompass is a tool for personal growth, the users can create a team addind others users and choose or create a growth model or choose one that already exists and then create new session of assessments. 
-During a session, the user will have to assess himself and the other members of the team. When everybody finish the assessments, The team compare there result for each person of the team and find an agreement for a final assessment. For this, the members can chat together to express there point of view. Then, they determinate 2 indicators to improve for each member and give some tasks to do that will help for the improvment.
+SkillsAmp is a tool that helps you to assess and follow-up your evolution in your professional growth using a growth model. A growth model is a way to understand where do you are and what to improve next.
+
+
+I built it by myself with React, Node.js and MongoDB as a final project for the Ironhack’s bootcamp.
+
+With SkillsAmp you can build, for yourself and for your team, a growth model where you can check the level of the different competencies that you defined as “key” for your role in a simple and visual way. 
+
+
+Choosing a growth model that corresponds to the competencies that will be assessed, the tool allows you to follow-up your evolution through checkpoints and do each assessment in collaboration with your team generating a final “skills wheel” that will help you as a reference for your growth. 
+
+The next features to add to the tool will be focused on creating your own growth models defining your competencies and levels.
+
+With SkillsAmp you can embrace a growth mindset and focus on continuously being a better version of yourself.
+
 
 [Link Deploy](https://skillsamp.herokuapp.com/)
 
