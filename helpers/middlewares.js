@@ -22,7 +22,6 @@ exports.isNotLoggedIn = () => (req, res, next) => {
 
 exports.validationLoggin = () => (req, res, next) => {
   const { email, password } = req.body;
-
   if (!email || !password) {
     const err = new Error('Unprocessable Entity');
     err.status = 422;
