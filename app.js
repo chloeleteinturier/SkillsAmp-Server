@@ -43,6 +43,8 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
+  } else { // allow other origins to make unauthenticated CORS requests
+    res.set('Access-Control-Allow-Origin', '*')        
   }
 });
 
