@@ -16,19 +16,20 @@ router.get('/:id', (req, res) => {
     return;
   }
 
-  Checkpoint.findById( id ).populate('assessments').populate('finalAssessments')  // add .populate('') when other param of teamModel added
+  Checkpoint.findById( id ).populate('finalAssessments')//.populate('assessments')  // add .populate('') when other param of teamModel added
     .then( (foundCheckpoint) => {
+      
       res.status(200).json(foundCheckpoint);
     })
     .catch((err) => {
-      res.res.status(500).json(err);
+      res.status(500).json(err);
     })
 });
 
 
 //  GET    '/checkpoint'
 router.get('/', (req,res,next)=>{
-  Checkpoint.find().populate('assessments').populate('finalAssessments')  // add .populate('') when other param of usermodel added
+  Checkpoint.find().populate('finalAssessments')//.populate('assessments')  // add .populate('') when other param of usermodel added
     .then(checkpoint => {
       res.json(checkpoint);
     })
@@ -43,9 +44,10 @@ router.get('/', (req,res,next)=>{
 // POST '/checkpoint'
 router.post('/', (req,res) => {
   const { date, currentCheckpoint, assessments, finalAssessments } = req.body;
-
-  Checkpoint.create({ date, currentCheckpoint, assessments, finalAssessments })
+  
+  Checkpoint.create({ date, assessments, finalAssessments, currentCheckpoint })
     .then((response)=> {
+      
       res
         .status(201)
         .json(response);

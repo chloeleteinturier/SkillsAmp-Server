@@ -8,6 +8,9 @@ const assessmentSchema = require('./../schemas/assessmentSchema');
 const checkpointSchema = new Schema({
   date: Date,
   assessments:{ type: [assessmentSchema] },
+  // assessments:{ type: Array },
+  // assessments:{type: Boolean, default: false},
+  // assessments:[{type: Schema.Types.assessmentSchema}],
   finalAssessments: [{type: Schema.Types.ObjectId, ref: 'FinalCompass'}],
   currentCheckpoint: Boolean,
 }, {
