@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 
-console.log('holiiii');
-
 const parser = require('./../config/cloufinary');
 
 
