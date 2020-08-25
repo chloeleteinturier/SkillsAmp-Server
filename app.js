@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   keepAlive: true,
   useNewUrlParser: true,
   // reconnectTries: Number.MAX_VALUE,
-  useUnifiedTopology: true,
+  // useUnifiedTopology: true,
   useCreateIndex: true,
   useFindAndModify: false
 }).then(() => {
